@@ -1,0 +1,102 @@
+Frappe adalah framework yang backendnya menggunakan Python dan Clientnya menggunakan Javascript
+
+Cara Install Frappe
+Step 1: Install ERPNext Requirements
+1. sudo apt update
+2. sudo apt install libffi-dev python-pip python-dev libssl-dev wkhtmltopdf curl git
+
+Step 2: Install Node Js and Redis
+3. sudo curl --silent --location https://deb.nodesource.com/setup_8.x | sudo bash -
+4. sudo apt-get install gcc g++ make
+5. sudo apt-get install -y nodejs redis-server
+6. sudo npm install -g yarn
+
+Step 3: Install Nginx / MariaDB
+7. sudo apt install nginx
+
+###Just For Your Information
+sudo systemctl stop nginx.service //for stop nginx
+sudo systemctl start nginx.service //for start nginx
+sudo systemctl enable nginx.service //for auto start nginx after boot
+
+8. sudo apt-get install mariadb-server mariadb-client
+
+###Just For Your Information
+
+Run these on Ubuntu 16.04 LTS
+sudo systemctl stop mysql.service
+sudo systemctl start mysql.service
+sudo systemctl enable mysql.service
+
+Run these on Ubuntu 18.04 and 18.10 LTS
+sudo systemctl stop mariadb.service
+sudo systemctl start mariadb.service
+sudo systemctl enable mariadb.service
+
+9. sudo mysql_secure_installation
+  When prompted, answer the questions below by following the guide.
+
+    Enter current password for root (enter for none): Just press the Enter
+    Set root password? [Y/n]: Y
+    New password: Enter password
+    Re-enter new password: Repeat password
+    Remove anonymous users? [Y/n]: Y
+    Disallow root login remotely? [Y/n]: Y
+    Remove test database and access to it? [Y/n]:  Y
+    Reload privilege tables now? [Y/n]:  Y
+
+Next, open MariaDB config file and make the highlighted changes below… then save the file..
+  
+  sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+
+On Ubuntu 16.04:
+  sudo nano /etc/mysql/my.cnf
+  
+Add the lines in the file and save… 
+
+ # this is only for the mysqld standalone daemon
+[mysqld]
+
+#
+# * Basic Settings
+#
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+innodb-file-format=barracuda
+innodb-file-per-table=1
+innodb-large-prefix=1
+character-set-client-handshake = FALSE
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+[mysql]
+  default-character-set = utf8mb4
+ 
+ 
+ To logon to MariaDB database server, run the commands below.
+
+  sudo mysql -u root -p
+  
+ Then create a database called erpnext
+ 
+  CREATE DATABASE erpnext;
+  
+ Create a database user called erpnextuser with new password
+  CREATE USER 'erpnextuser'@'localhost' IDENTIFIED BY 'new_password_here';
+ 
+ Then grant the user full access to the database.
+  GRANT ALL ON erpnext.* TO 'erpnextuser'@'localhost' IDENTIFIED BY 'user_password_here' WITH GRANT OPTION;
+ 
+  
+  
+ 
+ 
+Bench ada secondary perintah untuk frappe
